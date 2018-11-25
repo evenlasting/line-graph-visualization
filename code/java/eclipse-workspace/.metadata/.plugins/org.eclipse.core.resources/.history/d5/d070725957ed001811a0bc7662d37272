@@ -1,0 +1,39 @@
+package line_graph;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class paint extends JFrame{
+	public paint(String s) {
+		super.setTitle(s);
+		add(new NewPanel());
+	}
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+			paint f= new paint("line");
+			f.setSize(500,1000);
+			f.setLocationRelativeTo(null);
+			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			f.setVisible(true);
+			f.setBackground(Color.WHITE);
+	}
+class NewPanel extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawLine(0, 0, 50, 50);
+	}
+}
+}

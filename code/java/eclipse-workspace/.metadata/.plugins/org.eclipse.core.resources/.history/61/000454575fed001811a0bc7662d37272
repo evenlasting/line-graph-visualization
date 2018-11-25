@@ -1,0 +1,67 @@
+package line_graph;
+
+import java.awt.Graphics;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class paint extends JFrame{
+	public paint(String s) {
+		super.setTitle(s);
+		add(new NewPanel());
+	}
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	class line{
+		public line() {
+			for (int i=0;i<1000;i++)
+			{
+				y[i]=-1;
+			}
+		}
+		public line(int n) {
+			num=n;
+			for (int i=0;i<1000;i++)
+			{
+				y[i]=-1;
+			}
+		}
+		int[] y=new int [1000];
+		int num=0;	
+	}
+	
+	class point {
+		int x=0,y=0;
+	}
+	
+	static line[] lines=new line[100]; 	
+	point[] lastpoint=new point[100];
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+			paint f= new paint("line");
+			f.setSize(1500,500);
+			f.setLocationRelativeTo(null);
+			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			f.setVisible(true);
+	}
+class NewPanel extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		for(int i=0;i<1000;i++)
+		{
+			if (lines[i].y[i]!=-1)
+				g.drawLine(lastpoint[i].x, lastpoint[i].y,i,lines[i].y[i]);
+		}
+		g.drawLine(0, 0, 50, 50);
+	}
+}
+}

@@ -1,0 +1,15 @@
+package line_graph;
+
+public class main {
+	class point {
+		int[] x=new int [1000];
+		int[] y=new int [1000];
+		int num;
+	}
+	static point[] line=new point[100];
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
