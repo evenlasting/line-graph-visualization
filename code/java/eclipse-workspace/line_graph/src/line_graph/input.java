@@ -17,12 +17,17 @@ public class input {
 		{
 			int nnum=Integer.parseInt(br.readLine());
 			paint.lines[i].num=nnum;
+			
+			//paintsplit.lines[i].num=nnum;
+			
 			for(int j=0;j<nnum;j++)
 			{
 				str=br.readLine();
 				String[] xy=str.split(",");
 
-				paint.lines[i].y[Integer.parseInt(xy[0])]=Integer.parseInt(xy[1]);				
+				paint.lines[i].y[Integer.parseInt(xy[0])]=Integer.parseInt(xy[1]);		
+				
+				//paintsplit.lines[i].y[Integer.parseInt(xy[0])]=Integer.parseInt(xy[1]);
 			}
 		}
 		//while((str=br.readLine())!=null) {
