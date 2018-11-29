@@ -1,5 +1,6 @@
 package line_graph;
 
+import java.awt.Color;
 import java.util.Vector;
 
 import line_graph.paintsplit.A;
@@ -7,6 +8,15 @@ import line_graph.paintsplit.A;
 public class Trends extends Vector<A>{
 
 	private	int left,right;
+	private Color  color;
+	
+	void setcolor(Color col) {
+		color=col;
+	}
+	
+	Color getcolor() {
+		return color;
+	}
 	
 	int getleft() {
 		return left;

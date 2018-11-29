@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -22,7 +20,7 @@ public class paint extends JFrame{
 	static int linenum=10;
 	//public static int lineNum=10;
 	//public static int del=10;
-	public static int dis = 5;  //分开的距离
+	public static int dis = 50;  //分开的距离
 	
 	private static final long serialVersionUID = 1L;
 
@@ -56,7 +54,7 @@ public class paint extends JFrame{
 	}
 	
 	static public line[] lines=new line[linenum]; 	
-	static public point[] lastpoint=new point[linenum];
+//	static public point[] lastpoint=new point[linenum];
 	
 	
 //	static public int [] upper=new int[100];  //上面的线
@@ -83,9 +81,9 @@ public class paint extends JFrame{
 //		System.out.println("111");
 		for (int i=0;i<linenum;i++)
 			lines[i]=new line(1000);
-		for (int i=0;i<linenum;i++) {
-			lastpoint[i]=new point();
-		}
+//		for (int i=0;i<linenum;i++) {
+//			lastpoint[i]=new point();
+//		}
 		
 		input.getdata();
 		//init
@@ -124,70 +122,113 @@ public class paint extends JFrame{
 		super.paintComponent(g);
 		for(int i=0;i<1000;i++)//x
 		{
-			for (int j=0;j<linenum;j++)//line
-			if (lines[j].y[i]!=-1)
-			{
-				//g.drawLine(lastpoint[j].x, lastpoint[j].y,i,lines[j].y[i]);
-				//in(j,i);//处理第j条线，第i个点之后的in和split
-				//for each trend ,keep the uppest line the lowest line
-				//point thispoint=lastpoint[j];
-//				point lastupper=(upper[j]>=0)?lastpoint[upper[j]]:null;
-//				point lastlower=(lower[j]<=linenum)?lastpoint[lower[j]]:null;
-				//point upperpoint=(upper[j]>=0)?new point(i,lines[upper[j]].y[i]):null;
-				//point lowerpoint=(lower[j]<=linenum)?new point(i,lines[lower[j]].y[i]):null;
-				
-//				for(int k=j+1;k<linenum;k++)
-//				{
-//					int x;
-//					if (((x = in(new point(i,lines[j].y[i]),thispoint,new point(i,lines[k].y[i]),lastpoint[k]))>0))
-//					{
-//						
-//					}
-//				}
-				
-				lastpoint[j].x=i;
-				lastpoint[j].y=lines[j].y[i];
-			}
-			for (int i1=0;i1<v.size();i1++)//for all trends
-			{
-				int min,max;
-				min=Integer.MAX_VALUE;
-				max=Integer.MIN_VALUE;
-				for (A j1:v.get(i1)) {
+//			for (int j=0;j<linenum;j++)//line
+//			if (lines[j].y[i]!=-1)
+//			{
+//				//g.drawLine(lastpoint[j].x, lastpoint[j].y,i,lines[j].y[i]);
+//				//in(j,i);//处理第j条线，第i个点之后的in和split
+//				//for each trend ,keep the uppest line the lowest line
+//				//point thispoint=lastpoint[j];
+////				point lastupper=(upper[j]>=0)?lastpoint[upper[j]]:null;
+////				point lastlower=(lower[j]<=linenum)?lastpoint[lower[j]]:null;
+//				//point upperpoint=(upper[j]>=0)?new point(i,lines[upper[j]].y[i]):null;
+//				//point lowerpoint=(lower[j]<=linenum)?new point(i,lines[lower[j]].y[i]):null;
+//				
+////				for(int k=j+1;k<linenum;k++)
+////				{
+////					int x;
+////					if (((x = in(new point(i,lines[j].y[i]),thispoint,new point(i,lines[k].y[i]),lastpoint[k]))>0))
+////					{
+////						
+////					}
+////				}
+//				
+//				lastpoint[j].x=i;
+//				lastpoint[j].y=lines[j].y[i];
+//			}
+			
+			for (Trends i1:v) {
+				for (A j1:i1) {
 					j1.value=lines[j1.num].y[i];
 				}
-				Collections.sort(v.get(i1),sort.t);
-				
-				A lastone=v.get(i1).get(0);
-				int iii=0;
+				Collections.sort(i1, sort.t);
+			}
+			Vector<Trends> temptrend=new Vector<Trends>();
+			for (Trends i1:v) {
+				if (i1.size()==0) continue;
+				A lastone=i1.firstElement();
 				Vector<Integer> label=new Vector<Integer>();
-				for (A j1:v.get(i1)) {
+				int labeli=1;             //the first one will be skipped so the value of labeli is 1 instead of 0;
+				for (A j1:i1) {
 					if (j1==lastone) continue;
-					if (j1.value-lastone.value>dis) label.add(iii);    //对于split，打上label.
-					iii++;
-				}
-				int labeli=0;
-				for (int labelNum:label) {
+					if (j1.value-lastone.value>dis) label.add(labeli);
+					lastone=j1;
+					labeli++;
+				}				
+				int begin=0;
+				for (int labelnum:label) {
 					Trends temp=new Trends();
-					for (int pop=labeli;pop<labelNum;pop++) {
-						temp.add(v.get(i1).firstElement());
-						v.get(i1).remove(0);
-						labeli++;
+					for (;begin<labelnum;begin++) {
+						temp.add(i1.firstElement());
+						i1.remove(0);
 					}
-					v.add(temp);
+					//v.add(temp);
+					temptrend.add(temp);
 				}
-				
-				for (A j1:v.get(i1))//line in trend
-				{
-					min=(min<lines[j1.num].y[i])?min:lines[j1.num].y[i];
-					max=(max<lines[j1.num].y[i])?lines[j1.num].y[i]:max;
-				}
-				Collections.sort(v,sort.trends);
-				g.setColor(color[i1%6]);
-				g.drawLine(i, min	, i, max);
+			}
+			v.addAll(temptrend);
+			for (Trends i1:v) {
+				if (i1.size()==0) continue;
+				i1.setleft(i1.firstElement().value);
+				i1.setright(i1.lastElement().value);
+			}
+			Collections.sort(v,sort.trends);
+			int pnum=0;
+			for (Trends ptrend:v) {
+				g.setColor(color[(pnum++)%6]);
+				g.drawLine(i, ptrend.getleft(), i, ptrend.getright());
 				g.setColor(Color.black);
 			}
-			Collections.sort(v, sort.trends);
+//			for (int i1=0;i1<v.size();i1++)//for all trends
+//			{
+//				int min,max;
+//				min=Integer.MAX_VALUE;
+//				max=Integer.MIN_VALUE;
+//				for (A j1:v.get(i1)) {
+//					j1.value=lines[j1.num].y[i];
+//				}
+//				Collections.sort(v.get(i1),sort.t);
+//				
+//				A lastone=v.get(i1).get(0);
+//				int iii=0;
+//				Vector<Integer> label=new Vector<Integer>();
+//				for (A j1:v.get(i1)) {
+//					if (j1==lastone) continue;
+//					if (j1.value-lastone.value>dis) label.add(iii);    //对于split，打上label.
+//					iii++;
+//				}
+//				int labeli=0;
+//				for (int labelNum:label) {
+//					Trends temp=new Trends();
+//					for (int pop=labeli;pop<labelNum;pop++) {
+//						temp.add(v.get(i1).firstElement());
+//						v.get(i1).remove(0);
+//						labeli++;
+//					}
+//					v.add(temp);
+//				}
+//				
+//				for (A j1:v.get(i1))//line in trend
+//				{
+//					min=(min<lines[j1.num].y[i])?min:lines[j1.num].y[i];
+//					max=(max<lines[j1.num].y[i])?lines[j1.num].y[i]:max;
+//				}
+//				Collections.sort(v,sort.trends);
+//				g.setColor(color[i1%6]);
+//				g.drawLine(i, min	, i, max);
+//				g.setColor(Color.black);
+//			}
+//			Collections.sort(v, sort.trends);
 		}
 
 	}
