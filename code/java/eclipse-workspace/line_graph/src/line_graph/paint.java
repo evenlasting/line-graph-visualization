@@ -21,7 +21,7 @@ public class paint extends JFrame{
 	//public static int lineNum=10;
 	//public static int del=10;
 	public static int dis = 50;  //·Ö¿ªµÄ¾àÀë
-	
+	public static int trendsNum=0;
 	private static final long serialVersionUID = 1L;
 
 	static class line{
@@ -94,6 +94,9 @@ public class paint extends JFrame{
 //		for (int i=0;i<linenum-1;i++)
 //			lower[i]=i+1;
 		
+		list.setcolor(color[trendsNum++]);
+		
+		
 		
 		for (int i=0;i<linenum;i++) {
 			list.add(new A(i));
@@ -155,7 +158,7 @@ public class paint extends JFrame{
 			}
 			Vector<Trends> temptrend=new Vector<Trends>();
 			for (Trends i1:v) {
-				if (i1.size()==0) continue;
+				//if (i1.size()==0) continue;
 				A lastone=i1.firstElement();
 				Vector<Integer> label=new Vector<Integer>();
 				int labeli=1;             //the first one will be skipped so the value of labeli is 1 instead of 0;
@@ -173,19 +176,35 @@ public class paint extends JFrame{
 						i1.remove(0);
 					}
 					//v.add(temp);
+					temp.setcolor(color[trendsNum++]);
 					temptrend.add(temp);
 				}
 			}
 			v.addAll(temptrend);
 			for (Trends i1:v) {
-				if (i1.size()==0) continue;
+				//if (i1.size()==0) continue;
 				i1.setleft(i1.firstElement().value);
 				i1.setright(i1.lastElement().value);
 			}
 			Collections.sort(v,sort.trends);
+			
+//			{
+//			Vector<Integer> label=new Vector<Integer>();
+//			int max=0;
+//			int labeli=0;
+//			for (Trends i1:v) {
+//				if (i1.getright()>max) {
+//					max=i1.getright();
+//					label.add(labeli);
+//				}
+//			}
+//			}
+			
+			
 			int pnum=0;
 			for (Trends ptrend:v) {
-				g.setColor(color[(pnum++)%6]);
+				//g.setColor(color[(pnum++)%6]);
+				g.setColor(ptrend.getcolor());
 				g.drawLine(i, ptrend.getleft(), i, ptrend.getright());
 				g.setColor(Color.black);
 			}

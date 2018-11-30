@@ -150,7 +150,7 @@ public class paintsplit extends JFrame{
 			for (int j=0;j<linenum;j++)//line
 			if (lines[j].y[i]!=-1)
 			{
-				//g.drawLine(lastpoint[j].x, lastpoint[j].y,i,lines[j].y[i]);
+				g.drawLine(lastpoint[j].x, lastpoint[j].y,i,lines[j].y[i]);
 				//in(j,i);//处理第j条线，第i个点之后的in和split
 				//for each trend ,keep the uppest line the lowest line
 				point thispoint=lastpoint[j];

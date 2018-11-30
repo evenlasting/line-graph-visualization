@@ -16,18 +16,25 @@ public class input {
 		for (int i=0;i<num;i++)
 		{
 			int nnum=Integer.parseInt(br.readLine());
+			try
+			{
 			paint.lines[i].num=nnum;
-			
-			//paintsplit.lines[i].num=nnum;
+			}catch(Exception e) {}
+			try {
+			paintsplit.lines[i].num=nnum;
+			}catch(Exception e) {}
 			
 			for(int j=0;j<nnum;j++)
 			{
 				str=br.readLine();
 				String[] xy=str.split(",");
-
+			try {
 				paint.lines[i].y[Integer.parseInt(xy[0])]=Integer.parseInt(xy[1]);		
-				
-				//paintsplit.lines[i].y[Integer.parseInt(xy[0])]=Integer.parseInt(xy[1]);
+			}catch(Exception e) {}
+			try {
+				paintsplit.lines[i].y[Integer.parseInt(xy[0])]=Integer.parseInt(xy[1]);
+			}
+			catch(Exception e) {}
 			}
 		}
 		//while((str=br.readLine())!=null) {
