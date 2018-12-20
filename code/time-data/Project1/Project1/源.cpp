@@ -33,20 +33,21 @@ double line(double x) {
 
 int main() {
 	srand(unsigned(time(0)));
-	ofstream out("java.txt");
+	ofstream out("2.json");
 	out.clear();
-	/*out << "{\n";
-	for (int i = 0; i < 1000; i++)
+	out << "{\n";
+	for (int i = 0; i < 100; i++)
 	{
-		out << "\"line" << i << "\":[" << endl;
+		out << "\"" << i << "\":[" << endl;
 		for (int j = 0; j < 400; j += (int)random(5, 20))
 		{
-			out << "{\"x\":" << j << ",\"y\":" << line(j) + (0.3, 0.4)*line(j) << "}," << endl;
+			out << "{\"x\":" << j << ",\"y\":" << line(j) + random(-1, 1)*line(j) << "}," << endl;
 		}
-		out<<  "{\"x\":" << 400 << ",\"y\":" << line(400) + (0.3, 0.4)*line(400) << "}" << endl;
+		out<<  "{\"x\":" << 400 << ",\"y\":" << line(400) + random(-1, 1)*line(400) << "}" << endl;
 		out << "]," << endl;
 	}
-	out << "}";*/
+	out << "}";
+	/*
 	int num = 10;
 	out << num << endl;
 	for (int i = 0; i < num/2; i++)
@@ -67,6 +68,6 @@ int main() {
 			out << j << "," << int(line2(j) + random(-0.1, 0.1)*line2(j)) << endl;
 		}
 	}
-
+	*/
 	out.close();
 }

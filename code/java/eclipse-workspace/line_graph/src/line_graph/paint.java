@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Vector;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -20,7 +19,7 @@ public class paint extends JFrame{
 	static int linenum=10;
 	//public static int lineNum=10;
 	//public static int del=10;
-	public static int dis = 50;  //分开的距离
+	public static int dis = 100;  //分开的距离
 	public static int trendsNum=0;
 	private static final long serialVersionUID = 1L;
 
@@ -68,7 +67,7 @@ public class paint extends JFrame{
 	static Trends list=new Trends ();   //at first all lines are in one Trends
 	
 	static Color[] color= {Color.red,Color.blue,Color.green,Color.yellow,Color.pink,Color.orange};  //colors of the trends
-	
+	static int colornum=1;
 //	static int  in(point p1,point p2,point p3,point p4)//p1,p2 upper
 //	{
 //		if ((p2.x-p1.x)*(p4.y-p3.y)==(p2.y-p1.y)*(p4.x-p3.x)) return 0;
@@ -176,7 +175,7 @@ public class paint extends JFrame{
 						i1.remove(0);
 					}
 					//v.add(temp);
-					temp.setcolor(color[trendsNum++]);
+					temp.setcolor(color[trendsNum++ % colornum]);
 					temptrend.add(temp);
 				}
 			}
@@ -187,6 +186,58 @@ public class paint extends JFrame{
 				i1.setright(i1.lastElement().value);
 			}
 			Collections.sort(v,sort.trends);
+			
+			
+			Trends last=v.firstElement();
+			int colnum=last.size();
+			Vector<Integer> label=new Vector<Integer>();
+			int num=1;
+			for (Trends i1:v) {
+				if (i1==last) continue;
+				if (last.getright()+dis>i1.getleft()) 
+				{
+					last.addAll(i1);
+					last.setright(Integer.max(last.getright(),i1.getright()));
+					
+					if (i1.size()>colnum) {
+						last.setcolor(i1.getcolor());
+						colnum=i1.size();
+					}
+					
+					i1.setdel(true);
+				}
+				else
+				{
+				label.add(num-1);
+				last=i1;
+				colnum=last.size();
+				}
+				num++;
+			}
+//			num=0;
+//			for (int i1:label) {
+//				v.removeElementAt(i1-num);
+//				num++;
+//			}
+			
+			
+			num=0;
+			int size=v.size();
+			for (int i1=0;i1<size;i1++) {
+				if (v.elementAt(i1-num).getdel()) {
+					v.removeElementAt(i1-num);
+					num++;
+				}
+			}
+			
+			
+			
+//			for (Trends i1:v) {
+//				if (i1.getdel()) {
+//					v.removeElement(i1);
+//				}
+//			}
+			
 			
 //			{
 //			Vector<Integer> label=new Vector<Integer>();
@@ -201,7 +252,18 @@ public class paint extends JFrame{
 //			}
 			
 			
-			int pnum=0;
+			//int pnum=0;
+			
+			int finalnum=0;
+			for (Trends t:v) {
+				finalnum+=t.size();
+			}
+			if (finalnum!=10) {
+				System.out.println(i);
+			}
+			
+			
+			
 			for (Trends ptrend:v) {
 				//g.setColor(color[(pnum++)%6]);
 				g.setColor(ptrend.getcolor());

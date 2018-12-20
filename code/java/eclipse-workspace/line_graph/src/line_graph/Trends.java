@@ -9,6 +9,15 @@ public class Trends extends Vector<A>{
 
 	private	int left,right;
 	private Color  color;
+	private boolean del=false;
+	
+	void setdel(boolean b) {
+		del=b;
+	}
+	
+	boolean getdel() {
+		return del;
+	}
 	
 	void setcolor(Color col) {
 		color=col;
