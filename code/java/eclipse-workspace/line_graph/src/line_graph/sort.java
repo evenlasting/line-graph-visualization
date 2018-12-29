@@ -12,6 +12,7 @@ public class sort {
 		public int compare(Trends le,Trends ri) {
 			if (le.getleft()>ri.getleft())
 				return 1;
+			if (le.getleft()==ri.getleft()) return 0;
 			return -1;
 		}
 	}
@@ -20,6 +21,8 @@ public class sort {
 		public int compare(A left, A right) {
 			if (left.value>right.value)
 				return 1;
+			if (left.value==right.value) 
+				return 0;
 			return -1;
 		}
 	}

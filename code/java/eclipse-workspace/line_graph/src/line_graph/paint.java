@@ -16,10 +16,10 @@ public class paint extends JFrame{
 		add(new NewPanel());
 	}
 
-	static int linenum=10;
+	static int linenum=200;
 	//public static int lineNum=10;
 	//public static int del=10;
-	public static int dis = 100;  //分开的距离
+	public static int dis =100;  //分开的距离
 	public static int trendsNum=0;
 	private static final long serialVersionUID = 1L;
 
@@ -66,8 +66,8 @@ public class paint extends JFrame{
 	static Vector<Trends> v=new Vector<Trends>();     //all Trends
 	static Trends list=new Trends ();   //at first all lines are in one Trends
 	
-	static Color[] color= {Color.red,Color.blue,Color.green,Color.yellow,Color.pink,Color.orange};  //colors of the trends
-	static int colornum=1;
+	static Color[] color= {Color.black,Color.blue,Color.green,Color.yellow,Color.pink,Color.orange};  //colors of the trends
+	static int colornum=2;
 //	static int  in(point p1,point p2,point p3,point p4)//p1,p2 upper
 //	{
 //		if ((p2.x-p1.x)*(p4.y-p3.y)==(p2.y-p1.y)*(p4.x-p3.x)) return 0;
@@ -79,7 +79,7 @@ public class paint extends JFrame{
 		// TODO Auto-generated method stub
 //		System.out.println("111");
 		for (int i=0;i<linenum;i++)
-			lines[i]=new line(1000);
+			lines[i]=new line(400);
 //		for (int i=0;i<linenum;i++) {
 //			lastpoint[i]=new point();
 //		}
